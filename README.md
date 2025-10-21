@@ -48,3 +48,97 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+For an **Expo production build**, the commands depend on whether you are using the **managed workflow** with **Expo Go / EAS Build**. Here’s the clean breakdown:
+
+---
+
+## **1. Using EAS Build (recommended for production)**
+
+### **Install EAS CLI (if not installed)**
+
+```bash
+npm install -g eas-cli
+```
+
+### **Login to Expo**
+
+```bash
+eas login
+```
+
+### **Configure EAS (if not done)**
+
+```bash
+eas build:configure
+```
+
+This will create an `eas.json` file for build profiles.
+
+---
+
+### **2. Build for Android**
+
+```bash
+eas build --platform android --profile production
+```
+
+* `--platform android` → Android APK / AAB
+* `--profile production` → uses the production configuration from `eas.json`
+* By default, it will produce an **AAB** for Play Store. If you want APK:
+
+```bash
+eas build --platform android --profile production --type apk
+```
+
+---
+
+### **3. Build for iOS**
+
+```bash
+eas build --platform ios --profile production
+```
+
+* Requires **Apple Developer account**
+* Produces an **.ipa** ready for App Store submission
+
+---
+
+### **4. Optional: Local Build (classic `expo build`)**
+
+> This is **deprecated**, but still works for some managed projects:
+
+```bash
+expo build:android
+expo build:ios
+```
+
+* You’ll be prompted for type (`apk` or `aab` for Android, `simulator` or `archive` for iOS).
+* **EAS Build** is faster, more flexible, and required for production apps with custom dev clients.
+
+---
+
+### **5. Tips for Production**
+
+* Make sure your `app.json` or `app.config.js` has correct:
+
+  * `version`
+  * `orientation`
+  * `icon`
+  * `bundleIdentifier` (iOS)
+  * `package` (Android)
+* Run `expo optimize` to compress images before building.
+* Test locally with:
+
+```bash
+eas build --platform android --profile development
+```
+
+or
+
+```bash
+expo start --no-dev --minify
+```
+
+---
+
+If you want, I can give you a **ready-to-use EAS production build command with options for both Android and iOS** tailored for your `wisp` app so you can literally run one command and generate builds.
