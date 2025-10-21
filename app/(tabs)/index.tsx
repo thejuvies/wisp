@@ -40,15 +40,15 @@ export default function HomeScreen() {
           <TouchableOpacity
             style={{ marginBottom: 12 }}
             onPress={async () =>{
-                console.log(item.title,item.content);
-                await AsyncStorage.clear();
-                router.push({
-                    pathname: '/card',
-                    params: {
+                // console.log(item.title,item.content);
+                let displayItem = {
                         title: item.title,
                         content: item.content
                     }
-                })
+                await AsyncStorage.setItem('displayItem', JSON.stringify(displayItem));
+                router.push({
+                    pathname: '/card'
+                });
             }
 
             }

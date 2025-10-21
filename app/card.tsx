@@ -1,15 +1,22 @@
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { useSearchParams } from 'expo-router/build/hooks';
 import { ThemedView } from '@/components/themed-view';
 import { ThemedText } from '@/components/themed-text';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 
 export default function CardModalScreen() {
-  const params = useSearchParams();
-  const title = params.title || 'No Title';
-  const content = params.content || 'No Content';
-   console.log(params.title);   // "Hello"
-  console.log(params.content); 
-
+  
+  let [title, setTitle] = useState('No Title');
+  let [content, setContent] = useState('No Content');
+  useEffect(()=>{
+    const load = async () => {
+      let params = (await AsyncStorage.getItem('displayItem'));
+      params = JSON.parse(params);
+      setTitle(params?.title || 'No Title');
+      setContent(params?.content || 'No Content');
+    };
+    load();
+  },[])
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <ThemedView style={{ flex: 1, padding: 20, alignItems: 'center' }}>
@@ -21,3 +28,7 @@ export default function CardModalScreen() {
     </TouchableWithoutFeedback>
   );
 }
+
+// async function loadData() {
+  
+// }
