@@ -15,9 +15,7 @@ export default function CardModalScreen() {
   let [content, setContent] = useState('No Content');
   const load = async () => {
     let params = (await AsyncStorage.getItem('displayItem'));
-    console.log(params);
-    
-    params = JSON.parse(params);
+    params = JSON.parse(params?);
     setId(params?.id);
     setTitle(params?.title || 'No Title');
     setContent(params?.content || 'No Content');
