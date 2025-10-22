@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet, ScrollView } from 'react-native';
+import { Platform, StyleSheet, ScrollView,Button, View, Alert } from 'react-native';
 
 import { Collapsible } from '@/components/ui/collapsible';
 import { ExternalLink } from '@/components/external-link';
@@ -10,6 +10,8 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Fonts } from '@/constants/theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
+import { red } from 'react-native-reanimated/lib/typescript/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function TabTwoScreen() {
   return (
@@ -24,16 +26,31 @@ export default function TabTwoScreen() {
           }}>
           Settings
         </ThemedText>
-        
+        <View style={{marginTop:20,borderRadius:10, overflow: 'hidden',borderWidth: 0}}>
+          <ThemedView style={styles.buttonContainer}><Button title='Delete all' color={'red'} onPress={deleteAll}></Button></ThemedView>
+          {/* <ThemedView style={styles.buttonContainer}><Button title='Delete all'></Button></ThemedView> */}
+        </View>
       </ScrollView>
     </SafeAreaView>
     </>
   );
 }
 
+async function deleteAll() {
+  await AsyncStorage.setItem('items','');
+  setTimeout(()=>{
+    Alert.alert('All items deleted');
+  },500)
+}
 const styles = StyleSheet.create({
+  buttonContainer: {
+    borderWidth: 0.5,
+    borderBottomColor: '#333333ff',
+    padding:2,
+    alignItems:'flex-start'
+  },
   container: {
-    flex: 1,
+    flex: 1
   },
   scrollContainer: {
     padding: 10,
