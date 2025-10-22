@@ -9,30 +9,40 @@ import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Fonts } from '@/constants/theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
 
 export default function TabTwoScreen() {
   return (
     <>
-      <SafeAreaView>
-        <ScrollView>
-          <ThemedView>
-            <ThemedText type='title' style={{fontSize:40}}>Hello world</ThemedText>
-          </ThemedView>
-        </ScrollView>
-      </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        
+        <ThemedText
+          type="title"
+          style={{
+            fontFamily: Fonts.rounded,
+          }}>
+          Settings
+        </ThemedText>
+        
+      </ScrollView>
+    </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    flex: 1,
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+  scrollContainer: {
+    padding: 10,
+    flex:1,
+    paddingTop:30,
+    paddingLeft: 10
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
   },
 });

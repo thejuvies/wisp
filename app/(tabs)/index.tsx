@@ -7,6 +7,7 @@ import { ThemedText } from '@/components/themed-text';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Colors } from '@/constants/theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { React } from 'react';
 
 export default function HomeScreen() {
     const router = useRouter();
@@ -45,7 +46,9 @@ export default function HomeScreen() {
                         <TouchableOpacity
                             style={{ marginBottom: 12 }}
                             onPress={async () => {
+                                
                                 let displayItem = {
+                                    id: item.id,
                                     title: item.title,
                                     content: item.content
                                 }
@@ -79,7 +82,7 @@ export default function HomeScreen() {
 
             <TouchableOpacity
                 style={styles.addButtonContainer}
-                onPress={() => router.push('/modal')}
+                onPress={() => router.push('/additem')}
             >
                 <Text style={styles.addButton}>+</Text>
             </TouchableOpacity>
