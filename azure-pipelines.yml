@@ -19,3 +19,26 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'demo'
+    subscriptionId: '0b92aa0a-0412-4669-aa04-bef33b174b62'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'NetworkWatcherRG'
+    location: 'Brazil South'
+    templateLocation: 'Linked artifact'
+    csmFile: 'demo'
+    deploymentMode: 'Incremental'
+- task: AzureRmWebAppDeployment@5
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'demo'
+    appType: 'webApp'
+    WebAppName: 'demo'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
